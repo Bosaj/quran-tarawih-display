@@ -1,11 +1,21 @@
-# 2. Roadmap
+# Technical Roadmap & Milestones
 
-- v0.1 — offline: match a recorded recitation file to ayah indices.
-- v0.2 — live microphone streaming + current-ayah resolution.
-- v0.3 — mosque display mode (full-screen web client) + Raspberry Pi image.
-- v0.4 — multi-qiraʾat tolerance, translation toggle, Ramadan schedule mode.
+The development of **Qur'an Tarawih Live Mosque Display & Recitation Sync** is organized into four strategic milestones:
 
-## Notes for contributors / LLM agents
-- Start from the yayaiu6 tracker repo; evaluate its alignment accuracy on Moroccan recitation before rewriting.
-- The hard part is robust matching, not ASR: handle long pauses between ayat, verse repetition, and small recitation differences. Keep a sliding window of the last N recognized words and match against a flattened ayah-word index.
-- Never ship a translation or Quran text file without verifying it against a trusted source (Tanzil/quran.com). Accuracy of the sacred text is non-negotiable — treat corpus integrity as a hard requirement and add a checksum test.
+## Milestone Breakdown
+
+### Milestone v0.1 — Foundation & Core Scaffolding
+* **Objective:** Offline audio matcher aligning recorded recitation to Tanzil Quranic ayah indices.
+* **Deliverables:** Core architecture, basic pipeline, standard documentation, and CI integration.
+
+### Milestone v0.2 — Feature Expansion & Deep Pipelines
+* **Objective:** Live microphone audio stream chunker and low-latency phoneme/surah alignment.
+* **Deliverables:** Multimodal ingestion, expanded domain models, and automated test suites.
+
+### Milestone v0.3 — Intelligence, Refinement & Safety
+* **Objective:** High-contrast full-screen mosque display mode with King Fahd Complex typography.
+* **Deliverables:** Advanced evaluation logic, heuristic calibration, and performance profiling.
+
+### Milestone v0.4 — Production Readiness & Ecosystem Integration
+* **Objective:** Multi-qira'at support (Warsh & Hafs), translation toggle, and Ramadan prayer schedule.
+* **Deliverables:** Client UI / CLI tooling, cloud deployment manifests, and partner integrations.

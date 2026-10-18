@@ -1,9 +1,26 @@
-# Quran Tarawih Display — Wiki
+# Welcome to the Qur'an Tarawih Live Mosque Display & Recitation Sync Wiki
 
-> Show the Qur'anic verse the imam is reciting, live on the mosque TV/projector during Tarawih, synced to his recitation.
+Welcome to the official documentation for **Qur'an Tarawih Live Mosque Display & Recitation Sync** (`@Bosaj/quran-tarawih-display`).
 
-## Pages
-- [[1-Architecture]] — how the system is meant to fit together
-- [[2-Roadmap]] — milestones and status
+## Project Overview
 
-See the repository [README](../README.md) for the full context, prior art, and the LLM-handoff notes.
+Live Qur'an verse display for mosque projection screens during Tarawih prayers, synchronizing rendered ayah typography to the imam's recitation.
+
+---
+
+## Documentation Navigation
+
+* **[Architecture & System Design](1-Architecture)** — High-level architecture, module decomposition, and data flow.
+* **[Roadmap & Milestones](2-Roadmap)** — Version progression, future features, and release schedules.
+* **[Developer Setup & Contribution](Developer-Setup)** — Local environment setup, test execution, and CI/CD workflows.
+
+---
+
+## Key Principles & Quality Standards
+
+1. **Deterministic Quality:** 100% automated test coverage for core business logic and critical paths.
+2. **Security & Privacy First:** Zero unencrypted credentials, explicit consent gates, and secure communication channels.
+3. **Open Collaboration:** Adherence to Conventional Commits and semantic versioning.
+
+---
+*Maintained with excellence by [@Bosaj](https://github.com/Bosaj).*

@@ -3,7 +3,7 @@
 > Show the Qur'anic verse the imam is reciting, live on the mosque TV/projector during Tarawih, synced to his recitation.
 
 **Status:** pre-alpha scaffold (no code yet). **Feasibility rating:** 8/10 — real gap, especially in Morocco.
-**Author:** Oussama EL HADJI. Part of the Bosaj ideas portfolio (sibling repo: `dual_portfolio_hub`).
+**Author:** Oussama Elhadji (`@Bosaj`) <oussousselhadji@gmail.com>.
 
 ---
 
@@ -63,6 +63,7 @@ This repo is a **scaffold**: README + standard files, no implementation yet. If 
 # npm install && npm run dev   # once code lands
 ```
 
-## License
+## 📄 License
+**Proprietary Cultural & Non-Commercial Educational License** — All Rights Reserved © 2026 Oussama Elhadji (`@Bosaj`) <[oussousselhadji@gmail.com](mailto:oussousselhadji@gmail.com)>.
 
-[MIT](LICENSE) — © 2026 Oussama EL HADJI
+Free for personal learning and mosque worship. Commercial resale, monetization, and sublicensing are strictly prohibited. See [LICENSE](LICENSE) for full terms.

@@ -35,7 +35,7 @@ const deadline = t0 + MINUTES * 60_000
 let heard = ''
 while (Date.now() < deadline) {
   await panel.waitForTimeout(1000)
-  const pct = await panel.locator('[role=progressbar]').getAttribute('aria-valuenow').catch(() => null)
+  const pct = await panel.locator('[role=progressbar]').getAttribute('aria-valuenow', { timeout: 200 }).catch(() => null)
   if (pct !== null && Number(pct) >= lastLoad + 20) {
     lastLoad = Number(pct)
     console.log(`model download ${pct}% after ${Math.round((Date.now() - t0) / 1000)}s`)

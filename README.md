@@ -21,7 +21,7 @@ During Tarawih the congregation can't see which verse the imam is reciting. A sc
 ## Set it up in the mosque
 
 1. Plug a laptop into the mosque's sound system (line in or a microphone near a speaker) and into the projector or TV.
-2. Open the app in Chrome or Edge, and choose the riwaya and **On this computer**. The first time, it downloads the model (about 100 MB).
+2. Open the app in Chrome or Edge, and choose the riwaya and **On this computer**. The first time, it downloads the model (100–160 MB, which took about 4 minutes in testing). Do this before the prayer: after that it works offline.
 3. Press **Open the display screen**, drag that window to the projector and press `F` for full screen.
 4. Press **Start listening** before the prayer. Choose **Continue from the last place** to pick up from last night.
 5. Keep someone near the laptop. Arrow keys or the on-screen buttons correct the verse, `B` hides the screen.
@@ -50,7 +50,7 @@ Try it first with **Demo**, which needs no microphone.
 | Recogniser | Tarteel's Quran-trained Whisper, in the browser | Chrome or Edge's speech service |
 | Internet | First download only | Always |
 | Audio | Never leaves the device | Sent to the browser's service |
-| Download | About 100 MB, once | None |
+| Download | 100–160 MB, once | None |
 | Tested | On real recitation (below) | Not yet tested on real recitation |
 
 ## How accurate is it?
@@ -66,6 +66,8 @@ Measured with `npm run eval`: real recitations from [EveryAyah](https://everyaya
 | Hafs, Mahmoud Al-Husary: Ar-Rahman 1–40 | 8:13 | 66.2% | 100% | 0% | 1 word |
 
 "On the right verse" is limited by the reference: the true position inside a verse is estimated from its length, and the display naturally changes a moment after a verse begins. A step of the 8-second window took about 1.6 s on a laptop CPU in Node. Ar-Rahman's verses are very short, and its opening took 64 s to lock: the tracker waits rather than guess among repeated words.
+
+`e2e/mic.mjs` checks the same chain in a real browser: a Warsh recitation played into Chromium's microphone goes through the AudioWorklet, the Web Worker and the model on WebAssembly, and the display window follows it (67:1, 3, 4, 7 in the last run). The speed figure above is from Node, not the browser.
 
 **What this does not show:** these are clean studio recordings. A real imam in a mosque, with echo, a congregation and a cheap microphone, has not been tested yet. Please try it before relying on it, and report what happens.
 

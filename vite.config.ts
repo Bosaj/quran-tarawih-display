@@ -23,6 +23,8 @@ export default defineConfig({
       workbox: {
         // the whole app works offline in the mosque: text, fonts, translations. The model caches itself.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,json}'],
+        // says whether this copy runs on the LAN server, so it must always come from the server
+        globIgnores: ['lan.json'],
         maximumFileSizeToCacheInBytes: 3_000_000,
         navigateFallbackDenylist: [/^\/lan\.json/],
         // the recognition runtime is large, so it is cached on first use rather than for every visitor

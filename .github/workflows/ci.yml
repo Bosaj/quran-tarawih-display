@@ -1,48 +1,26 @@
-name: CI Pipeline
+name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main]
   pull_request:
-    branches: [ main, master ]
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
-  test:
-    name: Typecheck, Test & Validate
+  test-build:
+    name: test-build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js 22.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22.x
-
-      - name: Verify Documentation & Governance Standards
-        run: |
-          echo "Verifying repository governance standards..."
-          test -f README.md && echo "✓ README.md present"
-          test -f LICENSE && echo "✓ LICENSE present"
-          test -f CONTRIBUTING.md && echo "✓ CONTRIBUTING.md present"
-          test -f CONTRIBUTORS.md && echo "✓ CONTRIBUTORS.md present"
-          test -f SECURITY.md && echo "✓ SECURITY.md present"
-          test -f CHANGELOG.md && echo "✓ CHANGELOG.md present"
-
-      - name: Install Dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          elif [ -f package.json ]; then
-            npm install
-          else
-            echo "No package.json configured yet for foundation milestone."
-          fi
-
-      - name: Run Tests & Build
-        run: |
-          if [ -f package.json ]; then
-            npm test --if-present || true
-            npm run build --if-present || true
-          fi
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      # includes the SHA-256 check of the Qur'an text against what was published
+      - run: npm test
+      - run: npm run build

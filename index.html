@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>شاشة التراويح · Tarawih Display</title>
+    <meta name="description" content="Shows the verse the imam is reciting, live on the mosque screen during Tarawih. Warsh and Hafs. Works offline on a laptop, with no server." />
+    <meta name="theme-color" content="#0b0f0d" />
+    <meta property="og:title" content="شاشة التراويح · Tarawih Display" />
+    <meta property="og:description" content="The verse the imam is reciting, live on the mosque screen. Warsh and Hafs, offline, no server." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      // Set the language and direction before the first paint, so the page doesn't flip
+      ;(function () {
+        var l = 'ar'
+        try {
+          var s = JSON.parse(localStorage.getItem('tarawih:lang'))
+          if (s === 'ar' || s === 'fr' || s === 'en') l = s
+          else {
+            var n = navigator.language.slice(0, 2)
+            if (n === 'fr' || n === 'en') l = n
+          }
+        } catch (e) {}
+        document.documentElement.lang = l
+        document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

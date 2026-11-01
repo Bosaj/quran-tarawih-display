@@ -62,8 +62,10 @@ Measured with `npm run eval`: real recitations from [EveryAyah](https://everyaya
 | Warsh, Ibrahim Al-Dosary: Al-Mulk | 8:39 | 77.5% | 100% | 0% | 1 word |
 | Warsh, Yassin Al-Jazaery: Al-Baqarah 1–25 | 8:09 | 80.9% | 100% | 0% | 1 word |
 | Warsh, Ibrahim Al-Dosary: two rak'ahs, with Al-Fatiha before Al-Baqarah 100–110 and 111–118 | 12:36 | 85.7% | 100% | 0% | 0 words |
+| Hafs, Mishary Alafasy: Al-Mulk | 7:23 | 81.4% | 100% | 0% | 0 words |
+| Hafs, Mahmoud Al-Husary: Ar-Rahman 1–40 | 8:13 | 66.2% | 100% | 0% | 1 word |
 
-"On the right verse" is limited by the reference: the true position inside a verse is estimated from its length, and the display naturally changes a moment after a verse begins. A step of the 8-second window took about 1.6 s on a laptop CPU in Node.
+"On the right verse" is limited by the reference: the true position inside a verse is estimated from its length, and the display naturally changes a moment after a verse begins. A step of the 8-second window took about 1.6 s on a laptop CPU in Node. Ar-Rahman's verses are very short, and its opening took 64 s to lock: the tracker waits rather than guess among repeated words.
 
 **What this does not show:** these are clean studio recordings. A real imam in a mosque, with echo, a congregation and a cheap microphone, has not been tested yet. Please try it before relying on it, and report what happens.
 

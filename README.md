@@ -38,7 +38,7 @@ Try it first with **Demo**, which needs no microphone.
 | **Knows the prayer** | Al-Fatiha opens each rak'ah, then it returns to where the imam stopped. Takbir, "سمع الله لمن حمده" and "آمين" are ignored. Repeated refrains go to the next occurrence. |
 | **Projector screen** | The verse as large as it fits, at any resolution. The longest ayah (2:282) turns pages as the imam reaches them. The display stays awake and hides the mouse pointer. |
 | **Technician control** | Previous and next ayah, pause following, hide the screen, show any ayah. A manual correction always wins. |
-| **Phone remote** | `npm run lan` serves the app on the mosque's network, with a remote at `/#/remote`. |
+| **Phone remote** | `npm run lan` serves the app on the mosque's network, with a remote at `/#/remote`. Checked with separate browser contexts (`e2e/lan.mjs`), not yet on a physical phone. |
 | **Translation** | Optional French (Hamidullah) or English (Saheeh International). They follow the Kufi count, and Warsh verses are mapped to the Kufi verses they overlap. |
 | **Ramadan** | Remembers the running place each night for the next. |
 | **Three languages** | Arabic (RTL), French, English on the technician's page. |
@@ -105,7 +105,7 @@ src/lib/link.ts        keeps the windows and remotes in step
 src/components/        the fitted, paged verse and the screen
 src/pages/             Control (technician), Screen (projector), Remote (phone)
 tools/                 build-corpus, verify-corpus, eval, lan-server
-e2e/                   flow.mjs (pages), mic.mjs (real browser microphone)
+e2e/                   flow.mjs (pages), mic.mjs (real browser microphone), lan.mjs (phone remote)
 ```
 
 ## Getting started

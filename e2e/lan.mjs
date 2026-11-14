@@ -1,10 +1,10 @@
 // The phone remote through `npm run lan`: separate browser contexts stand in for separate devices,
 // so a BroadcastChannel can't connect them and only the WebSocket relay can.
-//   npm run build && npm run lan        (in another terminal)
-//   URL=http://localhost:8787/ CHROME=... node e2e/lan.mjs
+//   npm run build && LAN_KEY=test-key npm run lan        (in another terminal)
+//   URL=http://localhost:8787/?k=test-key CHROME=... node e2e/lan.mjs
 import { chromium } from 'playwright'
 
-const URL_ = process.env.URL ?? 'http://localhost:8787/'
+const URL_ = process.env.URL ?? 'http://localhost:8787/?k=test-key'
 const browser = await chromium.launch({ executablePath: process.env.CHROME })
 const results = []
 const errors = []
@@ -44,6 +44,17 @@ await screen.getByTestId('screen-ayah').waitFor({ timeout: 5000 })
 check('the phone shows it again', true)
 check('the phone shows where the imam is', (await phone.locator('.card').first().textContent()).length > 3, await phone.locator('.card').first().textContent())
 await phone.screenshot({ path: process.env.SHOT ?? 'remote.png' })
+
+// Without the pairing key, nobody on the network can join the relay
+const relay = new URL(URL_)
+const refused = await new Promise((resolve) => {
+  const ws = new WebSocket(`ws://${relay.host}/link?k=wrong-key`)
+  ws.onopen = () => resolve(false)
+  ws.onerror = () => resolve(true)
+})
+check('a device without the pairing key is refused', refused)
+const malformed = await fetch(`${relay.origin}/%zz`).then((r) => r.status)
+check('a malformed URL is refused and the server stays up', malformed === 400 && (await fetch(`${relay.origin}/lan.json`)).ok)
 
 // A remote that joins late still learns the state
 const late = await device('#/remote', { width: 390, height: 844 })

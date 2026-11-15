@@ -33,14 +33,28 @@ export interface Link {
  * over a BroadcastChannel, which needs no server. Served by `npm run lan`, a WebSocket relay also
  * reaches other devices on the mosque's network.
  */
+const KEY_STORE = 'tarawih-lan-key'
+
+/** The pairing key printed by `npm run lan`, from the link that opened the app (kept for the screen window). */
+function lanKey(): string | null {
+  const fromUrl = new URLSearchParams(location.search).get('k')
+  try {
+    if (fromUrl) localStorage.setItem(KEY_STORE, fromUrl)
+    return fromUrl ?? localStorage.getItem(KEY_STORE)
+  } catch {
+    return fromUrl
+  }
+}
+
 export function openLink(onMessage: (m: LinkMessage) => void): Link {
   const channel = typeof BroadcastChannel === 'undefined' ? null : new BroadcastChannel('tarawih')
   if (channel) channel.onmessage = (e) => onMessage(e.data as LinkMessage)
   let socket: WebSocket | null = null
   let closed = false
+  const key = lanKey()
   const connect = () => {
-    if (closed) return
-    const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/link`)
+    if (closed || !key) return
+    const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/link?k=${encodeURIComponent(key)}`)
     ws.onmessage = (e) => onMessage(JSON.parse(String(e.data)) as LinkMessage)
     ws.onopen = () => {
       socket = ws

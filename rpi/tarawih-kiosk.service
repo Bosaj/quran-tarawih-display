@@ -1,0 +1,24 @@
+[Unit]
+Description=Qur'an Tarawih Display Full-Screen Mosque HDMI Kiosk
+After=graphical.target tarawih-lan.service
+Requires=tarawih-lan.service
+
+[Service]
+Type=simple
+User=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStartPre=/bin/sleep 2
+ExecStart=/usr/bin/chromium \
+  --kiosk \
+  --noerrdialogs \
+  --disable-infobars \
+  --disable-session-crashed-bubble \
+  --autoplay-policy=no-user-gesture-required \
+  --check-for-update-interval=31536000 \
+  "http://localhost:8787/?k=mosque-tarawih-kiosk#/screen?kiosk=1&theme=oled"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

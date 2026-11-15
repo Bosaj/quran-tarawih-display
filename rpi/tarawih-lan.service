@@ -1,0 +1,18 @@
+[Unit]
+Description=Qur'an Tarawih Display Local Mosque LAN Relay Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/quran-tarawih-display
+Environment=NODE_ENV=production
+Environment=PORT=8787
+Environment=LAN_KEY=mosque-tarawih-kiosk
+ExecStart=/usr/bin/node /opt/quran-tarawih-display/tools/lan-server.mjs
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

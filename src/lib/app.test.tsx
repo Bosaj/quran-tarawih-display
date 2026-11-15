@@ -6,6 +6,7 @@ import { ScreenBody } from '../components/ScreenBody.tsx'
 import { buildCorpus, type CorpusFile } from './corpus.ts'
 import { Engine, progressKey, readProgress } from './engine.ts'
 import { STRINGS, statusLabel } from './i18n.ts'
+import { buildKioskLaunchUrl, computeBurnInOffset, nextKioskTheme, parseKioskConfig } from './kiosk.ts'
 import { INITIAL_SCREEN, type ScreenState } from './link.ts'
 import { downsample, type Recognizer, type RecognizerEvents } from './recognizers.ts'
 import { translationFor } from './useCorpus.ts'
@@ -195,5 +196,44 @@ describe('Audio and strings', () => {
   it('names every status', () => {
     expect(statusLabel('locked', STRINGS.en)).toBe(STRINGS.en.statusLocked)
     expect(statusLabel('idle', STRINGS.fr)).toBe(STRINGS.fr.statusIdle)
+  })
+})
+
+describe('Mosque Kiosk Mode and Raspberry Pi Appliance (#3)', () => {
+  it('parses kiosk URL parameters and themes cleanly', () => {
+    const cfg = parseKioskConfig('?k=secret123', '#/screen?kiosk=1&theme=emerald&scale=120&mosque=Al+Qaraouiyine')
+    expect(cfg.kiosk).toBe(true)
+    expect(cfg.theme).toBe('emerald')
+    expect(cfg.scale).toBe(120)
+    expect(cfg.burnInProtection).toBe(true)
+    expect(cfg.mosqueOverride).toBe('Al Qaraouiyine')
+    expect(nextKioskTheme('oled')).toBe('emerald')
+    expect(nextKioskTheme('emerald')).toBe('mushaf')
+    expect(nextKioskTheme('mushaf')).toBe('oled')
+  })
+
+  it('computes periodic OLED burn-in pixel offsets and kiosk launch URLs', () => {
+    expect(computeBurnInOffset(0)).toEqual({ x: 0, y: 0 })
+    expect(computeBurnInOffset(2)).toEqual({ x: 2, y: 1 })
+    expect(computeBurnInOffset(8)).toEqual({ x: 0, y: 0 })
+
+    const launchUrl = buildKioskLaunchUrl('http://192.168.1.50:8787/', {
+      key: 'abc',
+      theme: 'emerald',
+      scale: 115,
+      mosque: 'مسجد الحسن الثاني',
+    })
+    expect(launchUrl).toContain('k=abc')
+    expect(launchUrl).toContain('kiosk=1')
+    expect(launchUrl).toContain('theme=emerald')
+    expect(launchUrl).toContain('scale=115')
+  })
+
+  it('includes Raspberry Pi kiosk systemd units and setup script', () => {
+    const setupScript = readFileSync('rpi/setup-kiosk.sh', 'utf8')
+    const kioskUnit = readFileSync('rpi/tarawih-kiosk.service', 'utf8')
+    expect(setupScript).toContain('tarawih-kiosk.service')
+    expect(kioskUnit).toContain('--kiosk')
+    expect(kioskUnit).toContain('#/screen?kiosk=1')
   })
 })
